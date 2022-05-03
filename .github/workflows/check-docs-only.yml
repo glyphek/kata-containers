@@ -1,0 +1,40 @@
+# Copyright (c) 2022 Intel Corporation
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+name: Docs only check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+      - synchronize
+
+jobs:
+  check_and_label:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      
+      - name: Remove label
+        uses: actions-ecosystem/action-remove-labels@v1
+        with:
+          labels: force-skip-ci
+          
+      - name: Get files changed
+        uses: technote-space/get-diff-action@v6
+        with:
+          PATTERNS: |
+            **
+            !docs/*
+        
+      - name: Add label
+        if: ${{!env.GIT_DIFF}}
+        uses: actions-ecosystem/action-add-labels@v1
+        with:
+          labels: 
+            force-skip-ci
