@@ -3,7 +3,7 @@
 # SPDX-License-Identifier: Apache-2.0
 #
 
-name: Docs only check
+name: docs-only-check
 
 on:
   pull_request:
